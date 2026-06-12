@@ -163,6 +163,14 @@
             background-color: #005987;
         }
 
+        .btn-success {
+            background-color: #10b981;
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
         .btn-danger {
             background-color: #ef4444;
             padding: 0.4rem 1rem;
@@ -369,6 +377,31 @@
             border-radius: 6px;
             font-family: inherit;
             font-size: 0.85rem;
+            background-color: #fff;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        /* Output data box */
+        #output-box {
+            width: 100%;
+            margin-top: 1rem;
+            display: none;
+        }
+        #output-box textarea {
+            width: 100%;
+            font-family: monospace;
+            font-size: 0.8rem;
+            background-color: #0f172a;
+            color: #38bdf8;
+            padding: 1rem;
+            border-radius: 6px;
+            box-sizing: border-box;
         }
 
         /* --- Contact Section --- */
@@ -403,7 +436,7 @@
             .sidebar-brand { margin-bottom: 0; text-align: left; }
             nav ul { flex-direction: row; gap: 1rem; }
             nav a { padding: 0.5rem; }
-            nav a span { display: none; } /* Hide text icon captions on small mobile menu */
+            nav a span { display: none; }
             .sidebar-footer { display: none; }
             .main-wrapper { margin-left: 0; width: 100%; }
             .container { padding: 3rem 5%; }
@@ -501,32 +534,50 @@
         <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
             <h2 class="section-title">Technical Projects</h2>
             
-            <div class="admin-panel">
-                <h3><i class="fas fa-plus-circle" style="color: var(--primary-color);"></i> Project Control Manager (Local Storage)</h3>
-                <form id="project-form" onsubmit="addProject(event)">
+            <div class="admin-panel" id="admin-panel">
+                <h3><i class="fas fa-lock" style="color: var(--primary-color);"></i> Admin Project Dashboard</h3>
+                
+                <div id="auth-container">
+                    <div class="form-group" style="max-width: 300px; margin-bottom: 1rem;">
+                        <label for="admin-pass">Enter Admin Password to manage projects:</label>
+                        <input type="password" id="admin-pass" placeholder="Password (default: cisco123)">
+                    </div>
+                    <button type="button" class="btn" onclick="unlockAdmin()">Unlock Panel</button>
+                </div>
+
+                <form id="project-form" onsubmit="addProject(event)" style="display: none; margin-top: 1.5rem;">
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="proj-title">Project Title</label>
                             <input type="text" id="proj-title" required placeholder="e.g., BGP Multi-Homing Setup">
                         </div>
                         <div class="form-group">
-                            <label for="proj-image">Image URL</label>
-                            <input type="text" id="proj-image" placeholder="Unsplash/Direct link (Optional)">
+                            <label for="proj-file">Upload Image from Disk</label>
+                            <input type="file" id="proj-file" accept="image/*">
                         </div>
                         <div class="form-group">
                             <label for="proj-tags">Tags / Tech (Comma separated)</label>
-                            <input type="text" id="proj-tags" required placeholder="BGP, Cisco IOS, GNS3">
+                            <input type="text" id="proj-tags" required placeholder="BGP, Cisco IOS, FMC">
                         </div>
                         <div class="form-group">
                             <label for="proj-link">Project Link / Repo</label>
-                            <input type="text" id="proj-link" required placeholder="GitHub URL or '#' ">
+                            <input type="text" id="proj-link" required placeholder="GitHub URL or #">
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label for="proj-desc">Description</label>
                         <textarea id="proj-desc" rows="2" required placeholder="Briefly explain what you engineered and validated..."></textarea>
                     </div>
-                    <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Project Card</button>
+                    
+                    <div class="admin-actions">
+                        <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Project Card</button>
+                        <button type="button" class="btn btn-success" onclick="exportCode()"><i class="fas fa-file-code"></i> Generuj kod do pliku HTML</button>
+                    </div>
+
+                    <div id="output-box">
+                        <label style="font-size: 0.85rem; font-weight: bold; color: var(--text-dark);">Skopiuj poniższą sekcję i zamień tablicę 'initialProjects' w swoim pliku kodu źródłowego:</label>
+                        <textarea id="output-textarea" rows="8" readonly></textarea>
+                    </div>
                 </form>
             </div>
 
@@ -542,7 +593,7 @@
                 <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
                     <i class="fab fa-linkedin"></i> LinkedIn Profile
                 </a>
-                <a href="mailto:your.email@domain.com" class="btn">
+                <a href="mailto:maciekjeczmykcontact@gmail.com" class="btn">
                     <i class="far fa-envelope"></i> Send an Email
                 </a>
             </div>
@@ -551,7 +602,9 @@
     </div>
 
     <script>
-        // Initial core placeholder mock-up data seeds
+        // ==========================================
+        // TWOJA BAZA PROJEKTÓW (Zmień tutaj jeśli podmieniasz kod z generatora!)
+        // ==========================================
         const initialProjects = [
             {
                 id: 1,
@@ -583,10 +636,15 @@
             const container = document.getElementById('projects-container');
             container.innerHTML = '';
 
+            const isUnlocked = document.getElementById('project-form').style.display === 'block';
+
             projects.forEach(project => {
                 const tagSpans = project.tags.map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
                 const fallbackImg = project.image ? project.image : 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80';
                 
+                // Show delete button only if you are authenticated locally
+                const deleteBtn = isUnlocked ? `<button onclick="deleteProject(${project.id})" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>` : '';
+
                 const cardHTML = `
                     <div class="project-card">
                         <img src="${fallbackImg}" alt="${project.title}">
@@ -598,7 +656,7 @@
                             </div>
                             <div class="project-actions">
                                 <a href="${project.link}" target="_blank"><i class="fab fa-github"></i> View Details</a>
-                                <button onclick="deleteProject(${project.id})" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                ${deleteBtn}
                             </div>
                         </div>
                     </div>
@@ -607,42 +665,76 @@
             });
         }
 
-        // Add dynamic item action
+        // Simple auth simulation
+        function unlockAdmin() {
+            const pass = document.getElementById('admin-pass').value;
+            if(pass === 'cisco123') {
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('project-form').style.display = 'block';
+                renderProjects(); // Refresh to show delete buttons
+            } else {
+                alert('Błędne hasło! Spróbuj ponownie.');
+            }
+        }
+
+        // Add item + Image upload handling
         function addProject(e) {
             e.preventDefault();
             
             const title = document.getElementById('proj-title').value;
-            const image = document.getElementById('proj-image').value;
+            const fileInput = document.getElementById('proj-file');
             const tagsInput = document.getElementById('proj-tags').value;
             const link = document.getElementById('proj-link').value;
             const desc = document.getElementById('proj-desc').value;
 
             const tagsArray = tagsInput.split(',').filter(tag => tag.trim() !== '');
 
-            const newProject = {
-                id: Date.now(), // Unique ID token generator
-                title: title,
-                desc: desc,
-                tags: tagsArray,
-                image: image,
-                link: link
+            const proceedWithData = (base64Image) => {
+                const newProject = {
+                    id: Date.now(),
+                    title: title,
+                    desc: desc,
+                    tags: tagsArray,
+                    image: base64Image || "",
+                    link: link
+                };
+
+                projects.push(newProject);
+                localStorage.setItem('network_projects', JSON.stringify(projects));
+                renderProjects();
+                document.getElementById('project-form').reset();
             };
 
-            projects.push(newProject);
-            localStorage.setItem('network_projects', JSON.stringify(projects));
-            
-            renderProjects();
-            document.getElementById('project-form').reset();
+            // If file selected, read it as Base64 Data URL data
+            if(fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    proceedWithData(event.target.result);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                proceedWithData("");
+            }
         }
 
-        // Delete dynamic item action
+        // Delete dynamic item
         function deleteProject(id) {
             projects = projects.filter(proj => proj.id !== id);
             localStorage.setItem('network_projects', JSON.stringify(projects));
             renderProjects();
         }
 
-        // Sync left side panel active tab state changes on scrolling highlight hooks
+        // Export data system to patch HTML file directly
+        function exportCode() {
+            const box = document.getElementById('output-box');
+            const textarea = document.getElementById('output-textarea');
+            
+            const structuredCode = JSON.stringify(projects, null, 4);
+            textarea.value = `const initialProjects = ${structuredCode};`;
+            box.style.display = 'block';
+        }
+
+        // Sidebar active tab state changes on scrolling highlight hooks
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -664,7 +756,7 @@
             });
         });
 
-        // Initialize execution on runtime DOM generation load hook
+        // Initialize execution loop
         renderProjects();
     </script>
 
