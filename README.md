@@ -1,1 +1,1 @@
-# Projects
+This repository contains the source code for my personal portfolio website, designed specifically for a Network Engineer. The site showcases my professional summary, core technical expertise, and dynamically loaded technical case studies.
