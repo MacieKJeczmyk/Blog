@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maciej Jęczmyk | Network Engineer</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #0284c7; /* Professional network blue */
@@ -143,14 +144,42 @@
             border-radius: 2px;
         }
 
-        /* --- About Section --- */
+        /* --- About Section & Pillars --- */
         .about-text {
             max-width: 850px;
-            margin: 0 auto;
-            text-align: justify;
-            text-justify: inter-word;
+            margin: 0 auto 3rem auto;
+            text-align: center;
             color: var(--text-light);
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        .about-pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .pillar-card {
+            background: #fafafa;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .pillar-card h4 {
+            margin: 0 0 0.5rem 0;
             font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .pillar-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
         }
 
         /* --- Skills Section --- */
@@ -194,6 +223,89 @@
             color: var(--text-light);
         }
 
+        /* --- Projects Section --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-content h3 {
+            font-size: 1.3rem;
+            margin: 0 0 0.75rem 0;
+            font-weight: 700;
+        }
+
+        .project-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin: 0 0 1.5rem 0;
+            flex-grow: 1;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag {
+            background-color: #f1f5f9;
+            color: #475569;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .project-links a:hover {
+            color: #0369a1;
+        }
+
         /* --- Footer --- */
         footer {
             background-color: #0f172a;
@@ -217,7 +329,6 @@
             .section-title { font-size: 1.8rem; }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -226,6 +337,7 @@
             <ul>
                 <li><a href="#about">About Me</a></li>
                 <li><a href="#skills">Technical Expertise</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -235,9 +347,8 @@
         <img src="image.jpg" alt="Maciej Jęczmyk">
         <h1>Maciej Jęczmyk</h1>
         <h2>Network Engineer</h2>
-        <p class="about-text" style="text-align: center; margin-bottom: 2rem;">
-            Specializing in Layer 1-4 network architectures, enterprise-grade security solutions, and rigorous infrastructure validation. 
-            Experienced in managing complex lab environments and conducting advanced hardware and packet-level troubleshooting.
+        <p class="about-text" style="max-width: 750px; font-size: 1.2rem; margin-bottom: 2rem;">
+            Specializing in enterprise Layer 1-4 architectures, comprehensive test execution, and end-to-end network infrastructure validation.
         </p>
         <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
             <i class="fab fa-linkedin"></i> LinkedIn Profile
@@ -246,16 +357,25 @@
 
     <section id="about" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
         <h2 class="section-title">Professional Profile</h2>
+        
         <p class="about-text">
-            I am a detail-oriented Network Engineer with hands-on experience in building, maintaining, and validating complex enterprise and lab network environments. 
-            My expertise spans the implementation of robust Layer 1-4 architectures, utilizing core routing protocols (OSPF, EIGRP, RIP), VLAN segmentation, and precise IP addressing. 
-            I possess a strong background in network security and virtualization, deploying and configuring Cisco NGFW solutions (ASA, Firepower/FPR via FMC/FDM) alongside managing virtualized infrastructures on VMware ESXi and hardware provisioning within Cisco UCS environments.
+            I am a highly analytical and hands-on Network Engineer specializing in designing, implementing, and rigorously validating enterprise network ecosystems. With deep expertise in orchestrating complex lab environments and conducting precise packet-level diagnostics, I bridge the gap between architectural blueprints and rock-solid operational continuity. Driven by data accuracy, I focus on building resilient, automated, and secure infrastructures that scale.
         </p>
-        <br>
-        <p class="about-text">
-            Driven by technical accuracy, I specialize in advanced troubleshooting and performance validation, executing comprehensive test plans using industry-standard traffic generators like Ixia and Spirent, and performing deep packet-level analysis via Wireshark for Root Cause Analysis (RCA). 
-            Dedicated to operational continuity, I excel at producing structured technical documentation, ensuring complex network topologies and test outcomes are clearly articulated for seamless knowledge sharing.
-        </p>
+
+        <div class="about-pillars">
+            <div class="pillar-card">
+                <h4>Validation & Analysis</h4>
+                <p>Expert in reproducing critical network anomalies for precise Root Cause Analysis (RCA). Experienced in deploying industry-standard traffic generators (Ixia, Spirent) and utilizing Wireshark for multi-layer packet-level troubleshooting.</p>
+            </div>
+            <div class="pillar-card">
+                <h4>Routing & Security</h4>
+                <p>Proficient in deploying highly available Layer 1-4 architectures using OSPF, EIGRP, and RIP. Well-versed in enterprise-grade security hardening via Cisco ASA and Firepower (FTD) managed through FMC and FDM platforms.</p>
+            </div>
+            <div class="pillar-card">
+                <h4>Compute & Virtualization</h4>
+                <p>Hands-on capabilities in infrastructure virtualization and data center hardware orchestration, including provisioning bare-metal systems within Cisco UCS (CIMC) setups and managing virtual machines on VMware ESXi platforms.</p>
+            </div>
+        </div>
     </section>
 
     <section id="skills" class="container">
@@ -301,9 +421,50 @@
         </div>
     </section>
 
+    <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
+        <h2 class="section-title">Technical Projects</h2>
+        <div class="projects-grid">
+            
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="Network Automation">
+                <div class="project-content">
+                    <h3>Automated Lab Provisioning & Backup</h3>
+                    <p>Developed Python and Ansible playbooks to automate device state captures and configuration backups across multi-vendor lab environments, minimizing human error during replication testing.</p>
+                    <div class="project-tags">
+                        <span class="tag">Ansible</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Cisco IOS</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/MacieKJeczmyk" target="_blank"><i class="fab fa-github"></i> View Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Network Security">
+                <div class="project-content">
+                    <h3>Next-Gen Firewall Cluster Deployment</h3>
+                    <p>Designed and validated a high-availability Cisco FTD/Firepower cluster lab managed via FMC. Successfully tested granular Access Control Lists (ACLs), NAT policies, and secure AnyConnect VPN tunnels.</p>
+                    <div class="project-tags">
+                        <span class="tag">Cisco FTD</span>
+                        <span class="tag">FMC</span>
+                        <span class="tag">VPN</span>
+                        <span class="tag">Security</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/MacieKJeczmyk" target="_blank"><i class="fas fa-file-alt"></i> Documentation</a>
+                    </div>
+                </div>
+            </div>
+            " down to "",
+                 paste it right below this comment, and change the texts, tags, and links! -->
+
+        </div>
+    </section>
+
     <section id="contact" class="container" style="text-align: center;">
         <h2 class="section-title">Get In Touch</h2>
-        <p class="about-text" style="text-align: center; margin-bottom: 3rem;">Looking for a professional Network Engineer with deep testing and validation experience? Let's connect.</p>
+        <p class="about-text" style="margin-bottom: 3rem;">Looking for a professional Network Engineer with deep testing and validation experience? Let's connect.</p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
             <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
                 <i class="fab fa-linkedin"></i> LinkedIn Profile
