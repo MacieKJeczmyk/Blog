@@ -540,7 +540,7 @@
                 <div id="auth-container">
                     <div class="form-group" style="max-width: 300px; margin-bottom: 1rem;">
                         <label for="admin-pass">Enter Admin Password to manage projects:</label>
-                        <input type="password" id="admin-pass" placeholder="Password (default: cisco123)">
+                        <input type="password" id="admin-pass" placeholder="Password">
                     </div>
                     <button type="button" class="btn" onclick="unlockAdmin()">Unlock Panel</button>
                 </div>
@@ -668,7 +668,7 @@
         // Simple auth simulation
         function unlockAdmin() {
             const pass = document.getElementById('admin-pass').value;
-            if(pass === 'cisco123') {
+            if(pass === 'Maciek123') {
                 document.getElementById('auth-container').style.display = 'none';
                 document.getElementById('project-form').style.display = 'block';
                 renderProjects(); // Refresh to show delete buttons
