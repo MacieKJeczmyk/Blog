@@ -130,7 +130,7 @@
             font-size: 1.3rem;
             color: var(--primary-color);
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -171,19 +171,18 @@
         .section-title {
             text-align: center;
             font-size: 2rem;
-            margin-bottom: 3rem;
             font-weight: 700;
             position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
+            display: block;
+            width: max-content;
+            margin: 0 auto 3rem auto;
         }
         
         .section-title::after {
             content: '';
             position: absolute;
             bottom: -8px;
-            left: 0;
+            left: 20%;
             width: 60%;
             height: 4px;
             background-color: var(--primary-color);
@@ -375,9 +374,6 @@
             <img src="image.jpg" alt="Maciej Jęczmyk">
             <h1>Maciej Jęczmyk</h1>
             <h2>Network Engineer</h2>
-            <p class="about-text" style="max-width: 650px; font-size: 1.15rem; margin-bottom: 1.5rem;">
-                Specializing in enterprise routing ecosystems, network infrastructure validation, and security hardware testing.
-            </p>
             <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
                 <i class="fab fa-linkedin"></i> LinkedIn
             </a>
