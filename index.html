@@ -141,7 +141,7 @@
             gap: 0.5rem;
             background-color: var(--primary-color);
             color: #fff;
-            padding: 0.6rem 1.75rem;
+            padding: 0.75rem 2rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
@@ -163,23 +163,10 @@
             background-color: #005987;
         }
 
-        .btn-success {
-            background-color: #10b981;
-        }
-
-        .btn-success:hover {
-            background-color: #059669;
-        }
-
-        .btn-danger {
-            background-color: #ef4444;
-            padding: 0.4rem 1rem;
-            font-size: 0.85rem;
-            border-radius: 6px;
-        }
-
-        .btn-danger:hover {
-            background-color: #dc2626;
+        .btn-lg {
+            font-size: 1.1rem;
+            padding: 1rem 2.5rem;
+            box-shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.3);
         }
 
         /* --- General Containers --- */
@@ -253,155 +240,28 @@
             color: var(--text-light);
         }
 
-        /* --- Dynamic Projects Section --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
+        /* --- PDF Project Section Layout --- */
+        .pdf-section-wrapper {
+            text-align: center;
             max-width: 1000px;
             margin: 0 auto;
         }
 
-        .project-card {
-            background-color: var(--card-bg);
+        .pdf-viewer-container {
+            width: 100%;
+            height: 650px;
+            background-color: #f1f5f9;
             border-radius: 16px;
-            box-shadow: var(--shadow);
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            position: relative;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+            border: 1px solid #e2e8f0;
         }
 
-        .project-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
-        }
-
-        .project-card img {
+        .pdf-viewer-container iframe {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .project-content {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .project-content h3 {
-            font-size: 1.25rem;
-            margin: 0 0 0.5rem 0;
-            font-weight: 700;
-        }
-
-        .project-content p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin: 0 0 1.25rem 0;
-            flex-grow: 1;
-        }
-        
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1.25rem;
-        }
-        
-        .tag {
-            background-color: #f1f5f9;
-            color: #475569;
-            padding: 0.2rem 0.6rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .project-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-        }
-
-        .project-actions a {
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-
-        /* --- Project Manager Form Panel --- */
-        .admin-panel {
-            max-width: 1000px;
-            margin: 0 auto 3rem auto;
-            background-color: #f1f5f9;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 2px dashed #cbd5e1;
-        }
-
-        .admin-panel h3 {
-            margin-top: 0;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            color: var(--text-light);
-        }
-
-        .form-group input, .form-group textarea {
-            padding: 0.5rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 0.85rem;
-            background-color: #fff;
-        }
-
-        .admin-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        /* Output data box */
-        #output-box {
-            width: 100%;
-            margin-top: 1.5rem;
-            display: none;
-        }
-        #output-box textarea {
-            width: 100%;
-            font-family: monospace;
-            font-size: 0.8rem;
-            background-color: #0f172a;
-            color: #38bdf8;
-            padding: 1rem;
-            border-radius: 6px;
-            box-sizing: border-box;
+            height: 100%;
+            border: none;
         }
 
         /* --- Contact Section --- */
@@ -442,6 +302,12 @@
             .container { padding: 3rem 5%; }
             .hero { padding: 4rem 5%; }
             .hero h1 { font-size: 2.2rem; }
+            .pdf-viewer-container { height: 450px; } /* Slightly smaller on tablets */
+        }
+
+        @media (max-width: 600px) {
+            /* Przeglądarki PDF słabo działają wbudowane na telefonach, ukrywamy iframe na małych ekranach */
+            .pdf-viewer-container { display: none; } 
         }
     </style>
 </head>
@@ -457,7 +323,7 @@
             <ul>
                 <li><a href="#about" class="active"><i class="fas fa-user"></i> <span>Profile</span></a></li>
                 <li><a href="#skills"><i class="fas fa-cog"></i> <span>Skills</span></a></li>
-                <li><a href="#projects"><i class="fas fa-code-branch"></i> <span>Projects</span></a></li>
+                <li><a href="#projects"><i class="fas fa-file-pdf"></i> <span>Projects</span></a></li>
                 <li><a href="#contact"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
             </ul>
         </nav>
@@ -532,58 +398,23 @@
         </section>
 
         <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
-            <h2 class="section-title">Technical Projects</h2>
+            <h2 class="section-title">Engineering Case Studies</h2>
             
-            <div class="admin-panel" id="admin-panel">
-                <h3><i class="fas fa-lock" style="color: var(--primary-color);"></i> Admin Project Dashboard</h3>
-                
-                <div id="auth-container">
-                    <div class="form-group" style="max-width: 300px; margin-bottom: 1rem;">
-                        <label for="admin-pass">Enter Admin Password to manage projects:</label>
-                        <input type="password" id="admin-pass" placeholder="Password (default: cisco123)">
-                    </div>
-                    <button type="button" class="btn" onclick="unlockAdmin()">Unlock Panel</button>
+            <div class="pdf-section-wrapper">
+                <p class="about-text" style="margin-bottom: 2rem;">
+                    Przejrzyj moją kompletną dokumentację techniczną, topologie sieciowe oraz raporty z testów wydajnościowych bezpośrednio w oknie poniżej lub pobierz plik na dysk.
+                </p>
+
+                <div class="pdf-viewer-container">
+                    <iframe src="./projects.pdf" type="application/pdf"></iframe>
                 </div>
 
-                <form id="project-form" onsubmit="addProject(event)" style="display: none; margin-top: 1.5rem;">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="proj-title">Project Title</label>
-                            <input type="text" id="proj-title" required placeholder="e.g., BGP Multi-Homing Setup">
-                        </div>
-                        <div class="form-group">
-                            <label for="proj-file">Upload Image from Disk</label>
-                            <input type="file" id="proj-file" accept="image/*">
-                        </div>
-                        <div class="form-group">
-                            <label for="proj-tags">Tags / Tech (Comma separated)</label>
-                            <input type="text" id="proj-tags" required placeholder="BGP, Cisco IOS, FMC">
-                        </div>
-                        <div class="form-group">
-                            <label for="proj-link">Project Link / Repo</label>
-                            <input type="text" id="proj-link" required placeholder="GitHub URL or #">
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label for="proj-desc">Description</label>
-                        <textarea id="proj-desc" rows="2" required placeholder="Briefly explain what you engineered and validated..."></textarea>
-                    </div>
-                    
-                    <div class="admin-actions">
-                        <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Project Card</button>
-                    </div>
-
-                    <div id="output-box" style="display: block;">
-                        <label style="font-size: 0.85rem; font-weight: bold; color: var(--text-dark); display: block; margin-bottom: 0.5rem;">
-                            <i class="fas fa-exclamation-triangle" style="color: #eab308;"></i> Zmiany zapisano lokalnie! Aby zapisać je na stałe dla wszystkich, skopiuj poniższy kod i podmień tablicę 'initialProjects' w pliku HTML na GitHubie:
-                        </label>
-                        <textarea id="output-textarea" rows="8" readonly></textarea>
-                    </div>
-                </form>
+                <div style="margin-top: 1rem;">
+                    <a href="./projects.pdf" target="_blank" class="btn btn-lg">
+                        <i class="fas fa-cloud-download-alt"></i> Otwórz / Pobierz PDF z projektami
+                    </a>
+                </div>
             </div>
-
-            <div class="projects-grid" id="projects-container">
-                </div>
         </section>
 
         <section id="contact" class="container contact-section">
@@ -603,140 +434,6 @@
     </div>
 
     <script>
-        // ==========================================
-        // TWOJA GLÓWNA BAZA PROJEKTÓW
-        // Tu podmieniasz zawartość wygenerowaną w panelu strony!
-        // ==========================================
-        const initialProjects = [
-            {
-                id: 1,
-                title: "Automated Lab Provisioning & Backup",
-                desc: "Developed Python and Ansible playbooks to automate device state captures and configuration backups across multi-vendor lab environments, minimizing human error during replication testing.",
-                tags: ["Ansible", "Python", "Cisco IOS"],
-                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80",
-                link: "https://github.com/MacieKJeczmyk"
-            },
-            {
-                id: 2,
-                title: "Next-Gen Firewall Cluster Deployment",
-                desc: "Designed and validated a high-availability Cisco FTD/Firepower cluster lab managed via FMC. Successfully tested granular Access Control Lists (ACLs), NAT policies, and secure AnyConnect VPN tunnels.",
-                tags: ["Cisco FTD", "FMC", "VPN", "Security"],
-                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80",
-                link: "https://github.com/MacieKJeczmyk"
-            }
-        ];
-
-        // POPRAWKA: Sprawdzamy tylko, czy klucz w ogóle istnieje (null), a nie czy ma długość 0.
-        let projects = JSON.parse(localStorage.getItem('network_projects'));
-        if (projects === null) {
-            projects = initialProjects;
-            localStorage.setItem('network_projects', JSON.stringify(projects));
-        }
-
-        // Render projects engine
-        function renderProjects() {
-            const container = document.getElementById('projects-container');
-            container.innerHTML = '';
-
-            const isUnlocked = document.getElementById('project-form').style.display === 'block';
-
-            projects.forEach(project => {
-                const tagSpans = project.tags.map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
-                const fallbackImg = project.image ? project.image : 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80';
-                
-                const deleteBtn = isUnlocked ? `<button onclick="deleteProject(${project.id})" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>` : '';
-
-                const cardHTML = `
-                    <div class="project-card">
-                        <img src="${fallbackImg}" alt="${project.title}">
-                        <div class="project-content">
-                            <h3>${project.title}</h3>
-                            <p>${project.desc}</p>
-                            <div class="project-tags">
-                                ${tagSpans}
-                            </div>
-                            <div class="project-actions">
-                                <a href="${project.link}" target="_blank"><i class="fab fa-github"></i> View Details</a>
-                                ${deleteBtn}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += cardHTML;
-            });
-
-            // Automatycznie generuj kod źródłowy przy każdym renderowaniu, jeśli jesteś zalogowany
-            if (isUnlocked) {
-                exportCode();
-            }
-        }
-
-        // Simple auth simulation
-        function unlockAdmin() {
-            const pass = document.getElementById('admin-pass').value;
-            if(pass === 'cisco123') {
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('project-form').style.display = 'block';
-                renderProjects(); 
-            } else {
-                alert('Błędne hasło! Spróbuj ponownie.');
-            }
-        }
-
-        // Add item
-        function addProject(e) {
-            e.preventDefault();
-            
-            const title = document.getElementById('proj-title').value;
-            const fileInput = document.getElementById('proj-file');
-            const tagsInput = document.getElementById('proj-tags').value;
-            const link = document.getElementById('proj-link').value;
-            const desc = document.getElementById('proj-desc').value;
-
-            const tagsArray = tagsInput.split(',').filter(tag => tag.trim() !== '');
-
-            const proceedWithData = (base64Image) => {
-                const newProject = {
-                    id: Date.now(),
-                    title: title,
-                    desc: desc,
-                    tags: tagsArray,
-                    image: base64Image || "",
-                    link: link
-                };
-
-                projects.push(newProject);
-                localStorage.setItem('network_projects', JSON.stringify(projects));
-                renderProjects();
-                document.getElementById('project-form').reset();
-            };
-
-            if(fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    proceedWithData(event.target.result);
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                proceedWithData("");
-            }
-        }
-
-        // Delete dynamic item
-        function deleteProject(id) {
-            projects = projects.filter(proj => proj.id !== id);
-            localStorage.setItem('network_projects', JSON.stringify(projects));
-            renderProjects(); // To automatycznie odświeży też okienko z kodem
-        }
-
-        // Auto-export data structure
-        function exportCode() {
-            const textarea = document.getElementById('output-textarea');
-            const structuredCode = JSON.stringify(projects, null, 4);
-            textarea.value = `const initialProjects = ${structuredCode};`;
-        }
-
-        // Sidebar tracking hooks
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -744,7 +441,6 @@
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
                 if (pageYOffset >= (sectionTop - 200)) {
                     current = section.getAttribute('id');
                 }
@@ -757,8 +453,6 @@
                 }
             });
         });
-
-        renderProjects();
     </script>
 
 </body>
