@@ -163,12 +163,6 @@
             background-color: #005987;
         }
 
-        .btn-lg {
-            font-size: 1.1rem;
-            padding: 1rem 2.5rem;
-            box-shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.3);
-        }
-
         /* --- General Containers --- */
         .container {
             padding: 5rem 8%;
@@ -205,7 +199,7 @@
             line-height: 1.7;
         }
 
-        /* --- Skills Section --- */
+        /* --- Skills Grid --- */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -240,28 +234,76 @@
             color: var(--text-light);
         }
 
-        /* --- PDF Project Section Layout --- */
-        .pdf-section-wrapper {
-            text-align: center;
+        /* --- Dynamic PDF Projects Grid --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
             max-width: 1000px;
             margin: 0 auto;
         }
 
-        .pdf-viewer-container {
-            width: 100%;
-            height: 650px;
-            background-color: #f1f5f9;
-            border-radius: 16px;
-            overflow: hidden;
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 14px;
             box-shadow: var(--shadow);
-            margin-bottom: 2.5rem;
-            border: 1px solid #e2e8f0;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #f1f5f9;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .pdf-viewer-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+        }
+
+        .pdf-icon-frame {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(239, 68, 68, 0.08);
+            color: #ef4444;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .project-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .project-card p {
+            margin: 0 0 1.5rem 0;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            flex-grow: 1;
+        }
+
+        .btn-view-pdf {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-view-pdf:hover {
+            background-color: var(--primary-color);
+            color: #fff;
         }
 
         /* --- Contact Section --- */
@@ -302,12 +344,6 @@
             .container { padding: 3rem 5%; }
             .hero { padding: 4rem 5%; }
             .hero h1 { font-size: 2.2rem; }
-            .pdf-viewer-container { height: 450px; } /* Slightly smaller on tablets */
-        }
-
-        @media (max-width: 600px) {
-            /* Przeglądarki PDF słabo działają wbudowane na telefonach, ukrywamy iframe na małych ekranach */
-            .pdf-viewer-container { display: none; } 
         }
     </style>
 </head>
@@ -323,7 +359,7 @@
             <ul>
                 <li><a href="#about" class="active"><i class="fas fa-user"></i> <span>Profile</span></a></li>
                 <li><a href="#skills"><i class="fas fa-cog"></i> <span>Skills</span></a></li>
-                <li><a href="#projects"><i class="fas fa-file-pdf"></i> <span>Projects</span></a></li>
+                <li><a href="#projects"><i class="fas fa-folder-open"></i> <span>Projects</span></a></li>
                 <li><a href="#contact"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
             </ul>
         </nav>
@@ -398,22 +434,13 @@
         </section>
 
         <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
-            <h2 class="section-title">Engineering Case Studies</h2>
+            <h2 class="section-title">Technical Case Studies</h2>
+            <p class="about-text" style="margin-bottom: 3rem;">
+                Explore my technical design documents, network topologies, and lab execution logs directly from the active deployment directory.
+            </p>
             
-            <div class="pdf-section-wrapper">
-                <p class="about-text" style="margin-bottom: 2rem;">
-                    Przejrzyj moją kompletną dokumentację techniczną, topologie sieciowe oraz raporty z testów wydajnościowych bezpośrednio w oknie poniżej lub pobierz plik na dysk.
-                </p>
-
-                <div class="pdf-viewer-container">
-                    <iframe src="./projects.pdf" type="application/pdf"></iframe>
-                </div>
-
-                <div style="margin-top: 1rem;">
-                    <a href="./projects.pdf" target="_blank" class="btn btn-lg">
-                        <i class="fas fa-cloud-download-alt"></i> Otwórz / Pobierz PDF z projektami
-                    </a>
-                </div>
+            <div class="projects-grid" id="dynamic-pdf-container">
+                <p style="text-align: center; grid-column: 1/-1; color: var(--text-light);">Querying repository assets...</p>
             </div>
         </section>
 
@@ -434,6 +461,73 @@
     </div>
 
     <script>
+        async function loadRepositoryPDFs() {
+            const container = document.getElementById('dynamic-pdf-container');
+            
+            // Configuration mapped directly to your account
+            const gitHubUser = 'MacieKJeczmyk';
+            const gitHubRepo = 'Blog';
+            const targetFolder = 'projects';
+
+            try {
+                // Fetch active catalog from GitHub Public API
+                const response = await fetch(`https://api.github.com/repos/${gitHubUser}/${gitHubRepo}/contents/${targetFolder}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Directory mapping failed. Status: ${response.status}`);
+                }
+
+                const directoryContents = await response.json();
+                
+                // Keep only files ending with .pdf extension
+                const pdfFiles = directoryContents.filter(item => item.name.toLowerCase().endsWith('.pdf'));
+
+                if (pdfFiles.length === 0) {
+                    container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-light);">No PDF network case studies found in the target directory.</p>';
+                    return;
+                }
+
+                container.innerHTML = ''; // Clear loading status
+
+                pdfFiles.forEach(file => {
+                    // Prettify filename logic: "next-gen-firewall.pdf" -> "Next Gen Firewall"
+                    let cleanTitle = file.name
+                        .replace(/\.[^/.]+$/, "") // strip extension
+                        .replace(/[-_]/g, " ");   // replace symbols with clean spacing
+                    
+                    // Capitalize each word for enterprise layout
+                    cleanTitle = cleanTitle.replace(/\b\w/g, character => character.toUpperCase());
+
+                    // Map relative path for hosting compatibility
+                    const secureFilePath = `./${targetFolder}/${file.name}`;
+
+                    const cardComponent = document.createElement('div');
+                    cardComponent.className = 'project-card';
+                    cardComponent.innerHTML = `
+                        <div class="pdf-icon-frame">
+                            <i class="text-red fas fa-file-pdf"></i>
+                        </div>
+                        <h3>${cleanTitle}</h3>
+                        <p>Engineering deployment layout, network schema design, and operational verification records.</p>
+                        <a href="${secureFilePath}" target="_blank" class="btn-view-pdf">
+                            <i class="fas fa-external-link-alt"></i> View Case Study
+                        </a>
+                    `;
+                    container.appendChild(cardComponent);
+                });
+
+            } catch (error) {
+                console.error("Pipeline discovery failed:", error);
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; background: #fef2f2; border: 1px dashed #ef4444; border-radius: 12px;">
+                        <p style="color: #b91c1c; font-weight: 600; margin: 0;">Error scanning target repository pipeline.</p>
+                        <p style="font-size: 0.85rem; color: #7f1d1d; margin-top: 0.25rem;">Verify that a folder named '${targetFolder}' is committed to the root repository.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Sidebar tracking updates
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -453,6 +547,9 @@
                 }
             });
         });
+
+        // Initialize execution on content render
+        loadRepositoryPDFs();
     </script>
 
 </body>
