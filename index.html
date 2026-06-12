@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0284c7; /* Profesjonalny sieciowy niebieski/błękit */
-            --bg-color: #f8fafc; /* Jasne, nowoczesne tło */
-            --text-dark: #0f172a; /* Ciemny grafitowy tekst */
-            --text-light: #475569; /* Jaśniejszy tekst do opisów */
-            --card-bg: #ffffff; /* Tło sekcji i kart */
+            --primary-color: #0284c7; /* Professional network blue */
+            --bg-color: #f8fafc; /* Clean modern background */
+            --text-dark: #0f172a; /* Slate dark text */
+            --text-light: #475569; /* Slate muted text */
+            --card-bg: #ffffff; /* Section background */
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
 
@@ -23,12 +23,12 @@
             line-height: 1.6;
         }
 
-        /* --- Header / Nawigacja --- */
+        /* --- Header / Navigation --- */
         header {
             background-color: var(--card-bg);
             padding: 1rem 10%;
             display: flex;
-            justify-content: flex-end; /* Wyrównanie menu do prawej po usunięciu logo */
+            justify-content: flex-end; /* Clean right-aligned menu */
             align-items: center;
             box-shadow: var(--shadow);
             position: sticky;
@@ -55,7 +55,7 @@
             color: var(--primary-color);
         }
 
-        /* --- Główna Sekcja (Hero) --- */
+        /* --- Hero Section --- */
         .hero {
             padding: 8rem 10%;
             text-align: center;
@@ -108,7 +108,7 @@
         }
 
         .btn-secondary {
-            background-color: #0077b5; /* Kolor LinkedIn */
+            background-color: #0077b5; /* LinkedIn Blue */
             box-shadow: 0 4px 6px -1px rgba(0, 119, 181, 0.2);
         }
         
@@ -116,7 +116,7 @@
             background-color: #005987;
         }
 
-        /* --- Sekcje Ogólne --- */
+        /* --- General Containers --- */
         .container {
             padding: 6rem 10%;
         }
@@ -143,7 +143,7 @@
             border-radius: 2px;
         }
 
-        /* --- O mnie --- */
+        /* --- About Section --- */
         .about-text {
             max-width: 850px;
             margin: 0 auto;
@@ -152,7 +152,7 @@
             font-size: 1.1rem;
         }
 
-        /* --- Umiejętności --- */
+        /* --- Skills Section --- */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -187,65 +187,7 @@
             font-size: 1rem;
         }
 
-        /* --- Projekty --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .project-card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .project-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
-        }
-
-        .project-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .project-content {
-            padding: 2rem;
-        }
-
-        .project-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-        }
-
-        .project-content p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .tag {
-            background-color: #f1f5f9;
-            color: #475569;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* --- Stopka --- */
+        /* --- Footer --- */
         footer {
             background-color: #0f172a;
             color: #94a3b8;
@@ -257,7 +199,7 @@
             margin: 0;
         }
 
-        /* --- Responsive Design (Telefony) --- */
+        /* --- Responsive Design --- */
         @media (max-width: 768px) {
             header { padding: 1rem 5%; justify-content: center; }
             nav ul { gap: 1.5rem; font-size: 0.95rem; }
@@ -275,98 +217,63 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#about">O mnie</a></li>
-                <li><a href="#skills">Infrastruktura</a></li>
-                <li><a href="#projects">Projekty</a></li>
-                <li><a href="#contact">Kontakt</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Expertise</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <img src="https://via.placeholder.com/150" alt="Maciej Jęczmyk">
+        <img src="https://github.com/MacieKJeczmyk.png" alt="Maciej Jęczmyk">
         <h1>Maciej Jęczmyk</h1>
         <h2>Network Engineer</h2>
         <p class="about-text" style="margin-bottom: 2rem;">
-            Projektuję, wdrażam i optymalizuję bezpieczne oraz wysoce dostępne infrastruktury sieciowe (LAN/WAN/Cloud). 
-            Skupiam się na niezawodności systemów oraz automatyzacji procesów sieciowych.
+            Designing, implementing, and optimizing secure, highly available network infrastructures (LAN/WAN/Cloud). 
+            Focused on system reliability and network automation.
         </p>
         <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
-            <i class="fab fa-linkedin"></i> Profil LinkedIn
+            <i class="fab fa-linkedin"></i> LinkedIn Profile
         </a>
     </section>
 
     <section id="about" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
-        <h2 class="section-title">Profil zawodowy</h2>
+        <h2 class="section-title">Professional Profile</h2>
         <p class="about-text">
-            Jestem inżynierem sieciowym z pasją do budowania stabilnych architektur systemowo-sieciowych. 
-            Specjalizuję się w zarządzaniu zaawansowanym routingiem i switchingiem, wdrażaniu systemów zabezpieczeń (Firewalle nowej generacji) 
-            oraz integrowaniu środowisk lokalnych z chmurą obliczeniową. Wykorzystuję podejście NetDevOps, 
-            aby automatyzować codzienne zadania administracyjne i minimalizować ryzyko awarii.
+            I am a results-driven Network Engineer passionate about building stable enterprise-grade network and system architectures. 
+            My expertise includes advanced routing and switching, deploying Next-Generation Firewalls (NGFW), 
+            and seamlessly integrating on-premises environments with cloud infrastructure. 
+            Leveraging a NetDevOps mindset, I focus on automation to streamline daily administration and minimize downtime.
         </p>
     </section>
 
     <section id="skills" class="container">
-        <h2 class="section-title">Obszary Specjalizacji</h2>
+        <h2 class="section-title">Areas of Expertise</h2>
         <div class="skills-grid">
             <div class="skill-item"><i class="fas fa-route"></i><p>Routing & Switching</p></div>
             <div class="skill-item"><i class="fas fa-shield-alt"></i><p>Network Security</p></div>
             <div class="skill-item"><i class="fab fa-python"></i><p>Network Automation</p></div>
             <div class="skill-item"><i class="fas fa-network-wired"></i><p>LAN / WAN / VPN</p></div>
             <div class="skill-item"><i class="fas fa-cloud"></i><p>Cloud Networking</p></div>
-            <div class="skill-item"><i class="fas fa-chart-line"></i><p>Monitoring & Analiza</p></div>
-        </div>
-    </section>
-
-    <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
-        <h2 class="section-title">Zrealizowane Projekty</h2>
-        <div class="projects-grid">
-            
-            <div class="project-card">
-                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="Automatyzacja sieci">
-                <div class="project-content">
-                    <h3>Automatyzacja Infrastruktury (NetDevOps)</h3>
-                    <p>Wdrożenie systemu automatycznego backupu oraz konfiguracji urządzeń sieciowych z wykorzystaniem Ansible i Pythona. Skrócenie czasu wdrażania zmian o 70%.</p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Ansible</span>
-                        <span class="tag">Git</span>
-                        <span class="tag">Cisco IOS</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Bezpieczeństwo sieci">
-                <div class="project-content">
-                    <h3>Projekt Bezpiecznej Sieci Korporacyjnej</h3>
-                    <p>Zaprojektowanie i wdrożenie architektury sieciowej dla wielooddziałowej firmy. Implementacja zapór ogniowych NGFW, segmentacji sieci (VLAN) oraz bezpiecznych tuneli VPN.</p>
-                    <div class="project-tags">
-                        <span class="tag">Next-Gen Firewall</span>
-                        <span class="tag">IPsec VPN</span>
-                        <span class="tag">OSPF/BGP</span>
-                    </div>
-                </div>
-            </div>
-
+            <div class="skill-item"><i class="fas fa-chart-line"></i><p>Monitoring & Analytics</p></div>
         </div>
     </section>
 
     <section id="contact" class="container" style="text-align: center;">
-        <h2 class="section-title">Kontakt</h2>
-        <p class="about-text" style="margin-bottom: 3rem;">Szukasz inżyniera sieciowego do projektu lub stałej współpracy? Skontaktuj się ze mną przez LinkedIn lub mailowo.</p>
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="about-text" style="margin-bottom: 3rem;">Looking for a Network Engineer for a project or long-term collaboration? Let's connect on LinkedIn or reach out via email.</p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
             <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
-                <i class="fab fa-linkedin"></i> Profil LinkedIn
+                <i class="fab fa-linkedin"></i> LinkedIn Profile
             </a>
-            <a href="mailto:twój.email@domena.com" class="btn">
-                <i class="far fa-envelope"></i> Wyślij Wiadomość
+            <a href="mailto:your.email@domain.com" class="btn">
+                <i class="far fa-envelope"></i> Send an Email
             </a>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Maciej Jęczmyk. Wszystkie prawa zastrzeżone.</p>
+        <p>&copy; 2026 Maciej Jęczmyk. All rights reserved.</p>
     </footer>
 
 </body>
