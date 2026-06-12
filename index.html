@@ -156,7 +156,7 @@
         }
 
         .btn-secondary {
-            background-color: #0077b5; /* LinkedIn Blue */
+            background-color: #0077b5;
         }
         
         .btn-secondary:hover {
@@ -390,7 +390,7 @@
         /* Output data box */
         #output-box {
             width: 100%;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             display: none;
         }
         #output-box textarea {
@@ -540,7 +540,7 @@
                 <div id="auth-container">
                     <div class="form-group" style="max-width: 300px; margin-bottom: 1rem;">
                         <label for="admin-pass">Enter Admin Password to manage projects:</label>
-                        <input type="password" id="admin-pass" placeholder="Password">
+                        <input type="password" id="admin-pass" placeholder="Password (default: cisco123)">
                     </div>
                     <button type="button" class="btn" onclick="unlockAdmin()">Unlock Panel</button>
                 </div>
@@ -571,11 +571,12 @@
                     
                     <div class="admin-actions">
                         <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Project Card</button>
-                        <button type="button" class="btn btn-success" onclick="exportCode()"><i class="fas fa-file-code"></i> Generuj kod do pliku HTML</button>
                     </div>
 
-                    <div id="output-box">
-                        <label style="font-size: 0.85rem; font-weight: bold; color: var(--text-dark);">Skopiuj poniższą sekcję i zamień tablicę 'initialProjects' w swoim pliku kodu źródłowego:</label>
+                    <div id="output-box" style="display: block;">
+                        <label style="font-size: 0.85rem; font-weight: bold; color: var(--text-dark); display: block; margin-bottom: 0.5rem;">
+                            <i class="fas fa-exclamation-triangle" style="color: #eab308;"></i> Zmiany zapisano lokalnie! Aby zapisać je na stałe dla wszystkich, skopiuj poniższy kod i podmień tablicę 'initialProjects' w pliku HTML na GitHubie:
+                        </label>
                         <textarea id="output-textarea" rows="8" readonly></textarea>
                     </div>
                 </form>
@@ -603,7 +604,8 @@
 
     <script>
         // ==========================================
-        // TWOJA BAZA PROJEKTÓW (Zmień tutaj jeśli podmieniasz kod z generatora!)
+        // TWOJA GLÓWNA BAZA PROJEKTÓW
+        // Tu podmieniasz zawartość wygenerowaną w panelu strony!
         // ==========================================
         const initialProjects = [
             {
@@ -624,9 +626,9 @@
             }
         ];
 
-        // Load project dynamic database engine states
+        // POPRAWKA: Sprawdzamy tylko, czy klucz w ogóle istnieje (null), a nie czy ma długość 0.
         let projects = JSON.parse(localStorage.getItem('network_projects'));
-        if (!projects || projects.length === 0) {
+        if (projects === null) {
             projects = initialProjects;
             localStorage.setItem('network_projects', JSON.stringify(projects));
         }
@@ -642,7 +644,6 @@
                 const tagSpans = project.tags.map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
                 const fallbackImg = project.image ? project.image : 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80';
                 
-                // Show delete button only if you are authenticated locally
                 const deleteBtn = isUnlocked ? `<button onclick="deleteProject(${project.id})" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>` : '';
 
                 const cardHTML = `
@@ -663,21 +664,26 @@
                 `;
                 container.innerHTML += cardHTML;
             });
+
+            // Automatycznie generuj kod źródłowy przy każdym renderowaniu, jeśli jesteś zalogowany
+            if (isUnlocked) {
+                exportCode();
+            }
         }
 
         // Simple auth simulation
         function unlockAdmin() {
             const pass = document.getElementById('admin-pass').value;
-            if(pass === 'Maciek123') {
+            if(pass === 'cisco123') {
                 document.getElementById('auth-container').style.display = 'none';
                 document.getElementById('project-form').style.display = 'block';
-                renderProjects(); // Refresh to show delete buttons
+                renderProjects(); 
             } else {
                 alert('Błędne hasło! Spróbuj ponownie.');
             }
         }
 
-        // Add item + Image upload handling
+        // Add item
         function addProject(e) {
             e.preventDefault();
             
@@ -705,7 +711,6 @@
                 document.getElementById('project-form').reset();
             };
 
-            // If file selected, read it as Base64 Data URL data
             if(fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
@@ -721,20 +726,17 @@
         function deleteProject(id) {
             projects = projects.filter(proj => proj.id !== id);
             localStorage.setItem('network_projects', JSON.stringify(projects));
-            renderProjects();
+            renderProjects(); // To automatycznie odświeży też okienko z kodem
         }
 
-        // Export data system to patch HTML file directly
+        // Auto-export data structure
         function exportCode() {
-            const box = document.getElementById('output-box');
             const textarea = document.getElementById('output-textarea');
-            
             const structuredCode = JSON.stringify(projects, null, 4);
             textarea.value = `const initialProjects = ${structuredCode};`;
-            box.style.display = 'block';
         }
 
-        // Sidebar active tab state changes on scrolling highlight hooks
+        // Sidebar tracking hooks
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -756,7 +758,6 @@
             });
         });
 
-        // Initialize execution loop
         renderProjects();
     </script>
 
