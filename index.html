@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maciej Jęczmyk | Network Engineer Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #0284c7; /* Professional network blue */
-            --bg-color: #f8fafc; /* Clean modern background */
-            --text-dark: #0f172a; /* Slate dark text */
-            --text-light: #475569; /* Slate muted text */
-            --card-bg: #ffffff; /* Section background */
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --primary-color: #0284c7; 
+            --primary-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            --bg-color: #f8fafc; 
+            --text-dark: #0f172a; 
+            --text-light: #475569; 
+            --card-bg: #ffffff; 
+            --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 20px 30px -10px rgba(2, 132, 199, 0.15);
             --sidebar-width: 260px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
         }
 
         body {
@@ -24,6 +29,7 @@
             color: var(--text-dark);
             line-height: 1.6;
             display: flex;
+            overflow-x: hidden;
         }
 
         /* --- Left Sidebar Navigation --- */
@@ -31,16 +37,17 @@
             width: var(--sidebar-width);
             height: 100vh;
             background-color: var(--card-bg);
-            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            box-shadow: 4px 0 20px rgba(15, 23, 42, 0.03);
             position: fixed;
             top: 0;
             left: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 2rem 1.5rem;
+            padding: 2.5rem 1.5rem;
             box-sizing: border-box;
             z-index: 1000;
+            border-right: 1px solid #e2e8f0;
         }
 
         .sidebar-brand {
@@ -53,13 +60,16 @@
             font-size: 1.3rem;
             font-weight: 700;
             letter-spacing: -0.03em;
+            color: var(--text-dark);
         }
 
         .sidebar-brand p {
-            margin: 0.2rem 0 0 0;
+            margin: 0.3rem 0 0 0;
             font-size: 0.85rem;
             color: var(--primary-color);
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         nav ul {
@@ -68,7 +78,7 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         nav a {
@@ -78,21 +88,43 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s;
+            padding: 0.85rem 1.25rem;
+            border-radius: var(--radius-md);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        nav a i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        nav a:hover i {
+            transform: scale(1.15);
         }
 
         nav a:hover, nav a.active {
             color: var(--primary-color);
-            background-color: rgba(2, 132, 199, 0.08);
+            background-color: rgba(2, 132, 199, 0.06);
             font-weight: 600;
+        }
+
+        nav a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25%;
+            height: 50%;
+            width: 4px;
+            background: var(--primary-gradient);
+            border-radius: 0 4px 4px 0;
         }
 
         .sidebar-footer {
             font-size: 0.75rem;
             color: #94a3b8;
             text-align: center;
+            font-weight: 500;
         }
 
         /* --- Main Content Wrapper --- */
@@ -102,187 +134,232 @@
             box-sizing: border-box;
         }
 
-        /* --- Hero Section --- */
+        /* --- Hero Section with Animated Gradient --- */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .hero {
-            padding: 6rem 8% 4rem 8%;
+            padding: 7rem 8% 5rem 8%;
             text-align: center;
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.06) 0%, rgba(248, 250, 252, 0) 100%);
+            background: linear-gradient(-45deg, rgba(2, 132, 199, 0.08), rgba(248, 250, 252, 0), rgba(2, 132, 199, 0.03), rgba(248, 250, 252, 0));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            border-bottom: 1px solid #f1f5f9;
         }
 
         .hero img {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             object-fit: cover;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-md);
             margin-bottom: 1.5rem;
             border: 4px solid #fff;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hero img:hover {
+            transform: scale(1.08) rotate(3deg);
+            box-shadow: var(--shadow-lg);
         }
 
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.05em;
+            letter-spacing: -0.04em;
+            color: var(--text-dark);
         }
 
         .hero h2 {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--primary-color);
             font-weight: 600;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
         }
 
+        /* --- Modern Buttons --- */
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background-color: var(--primary-color);
+            gap: 0.6rem;
+            background: var(--primary-gradient);
             color: #fff;
-            padding: 0.75rem 2rem;
+            padding: 0.85rem 2.25rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: background 0.3s, transform 0.2s;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
         }
 
         .btn:hover {
-            background-color: #0369a1;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+            filter: brightness(1.05);
         }
 
         .btn-secondary {
-            background-color: #0077b5;
+            background: linear-gradient(135deg, #0077b5 0%, #005987 100%);
+            box-shadow: 0 4px 14px rgba(0, 119, 181, 0.3);
         }
         
         .btn-secondary:hover {
-            background-color: #005987;
+            box-shadow: 0 6px 20px rgba(0, 119, 181, 0.4);
         }
 
         /* --- General Containers --- */
         .container {
-            padding: 5rem 8%;
+            padding: 6rem 8%;
+            text-align: center;
         }
 
         .section-title {
-            text-align: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
+            margin: 0 auto 3.5rem auto;
             position: relative;
-            display: block;
-            width: max-content;
-            margin: 0 auto 3rem auto;
+            display: inline-block;
+            letter-spacing: -0.03em;
         }
         
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -10px;
             left: 20%;
             width: 60%;
             height: 4px;
-            background-color: var(--primary-color);
-            border-radius: 2px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
         }
 
         .about-text {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             text-align: center;
             color: var(--text-light);
             font-size: 1.1rem;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         /* --- Skills Grid --- */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            max-width: 1000px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.75rem;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .skill-item {
             background-color: var(--card-bg);
-            padding: 1.5rem;
+            padding: 2rem 1.75rem;
             text-align: center;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #f1f5f9;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(2, 132, 199, 0.2);
         }
         
         .skill-item i {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--primary-color);
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover i {
+            transform: scale(1.1) translateY(-2px);
         }
         
         .skill-item h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.1rem;
+            margin: 0 0 0.6rem 0;
+            font-size: 1.15rem;
             font-weight: 700;
+            color: var(--text-dark);
         }
 
         .skill-item p {
             margin: 0;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-light);
         }
 
         /* --- Dynamic PDF Projects Grid --- */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
+            text-align: left;
         }
 
         .project-card {
             background-color: var(--card-bg);
-            border-radius: 14px;
-            box-shadow: var(--shadow);
-            padding: 1.75rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             border: 1px solid #f1f5f9;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(2, 132, 199, 0.3);
         }
 
         .pdf-icon-frame {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(239, 68, 68, 0.08);
+            width: 52px;
+            height: 52px;
+            background-color: rgba(239, 68, 68, 0.07);
             color: #ef4444;
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.25rem;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .pdf-icon-frame {
+            background-color: #ef4444;
+            color: #fff;
+            transform: scale(1.05);
         }
 
         .project-card h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.2rem;
+            margin: 0 0 0.6rem 0;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--text-dark);
         }
 
         .project-card p {
-            margin: 0 0 1.5rem 0;
-            font-size: 0.85rem;
+            margin: 0 0 1.75rem 0;
+            font-size: 0.9rem;
             color: var(--text-light);
             flex-grow: 1;
+            line-height: 1.6;
         }
 
         .btn-view-pdf {
@@ -292,36 +369,37 @@
             gap: 0.5rem;
             background-color: #f1f5f9;
             color: var(--text-dark);
-            padding: 0.6rem 1.25rem;
-            border-radius: 8px;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--radius-md);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
         }
 
         .btn-view-pdf:hover {
-            background-color: var(--primary-color);
+            background: var(--primary-gradient);
             color: #fff;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
         }
 
         /* --- Contact Section --- */
         .contact-section {
-            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
         }
 
         .contact-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.25rem;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
             width: 100%;
-            margin-top: 2rem;
+            margin-top: 2.5rem;
         }
 
         /* --- Responsive Design --- */
@@ -331,18 +409,22 @@
                 width: 100%;
                 height: auto;
                 position: relative;
-                padding: 1rem 5%;
-                flex-direction: row;
+                padding: 1.25rem 5%;
+                flex-direction: column;
+                gap: 1rem;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
             }
-            .sidebar-brand { margin-bottom: 0; text-align: left; }
-            nav ul { flex-direction: row; gap: 1rem; }
-            nav a { padding: 0.5rem; }
+            .sidebar-brand { margin-bottom: 0; text-align: center; }
+            nav ul { flex-direction: row; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+            nav a { padding: 0.5rem 0.75rem; font-size: 0.9rem; }
             nav a span { display: none; }
+            nav a.active::before { display: none; }
             .sidebar-footer { display: none; }
             .main-wrapper { margin-left: 0; width: 100%; }
-            .container { padding: 3rem 5%; }
-            .hero { padding: 4rem 5%; }
-            .hero h1 { font-size: 2.2rem; }
+            .container { padding: 4rem 5%; }
+            .hero { padding: 5rem 5% 4rem 5%; }
+            .hero h1 { font-size: 2.4rem; }
         }
     </style>
 </head>
@@ -350,7 +432,7 @@
 
     <header>
         <div class="sidebar-brand">
-            <h3>M. Jęczmyk</h3>
+            <h3>Maciej Jęczmyk</h3>
             <p>Network Engineer</p>
         </div>
         
@@ -379,7 +461,7 @@
             </a>
         </section>
 
-        <section id="about" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
+        <section id="about" class="container" style="background-color: var(--card-bg); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
             <h2 class="section-title">Professional Summary</h2>
             <p class="about-text">
                 Hands-on Network Engineer focused on building, testing, and troubleshooting enterprise Layer 1-4 routing and switching topologies (OSPF, EIGRP, BGP). Experienced in rigorous network infrastructure validation using Ixia/Spirent traffic generators, deep packet capture analysis via Wireshark, and Root Cause Analysis (RCA). Competencies include provisioning Cisco security architectures (ASA, FTD Firepower managed via FMC/FDM), managing virtualized infrastructure on VMware ESXi, and orchestrating server compute platforms via Cisco UCS (CIMC).
@@ -429,7 +511,7 @@
             </div>
         </section>
 
-        <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
+        <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
             <h2 class="section-title">Technical Case Studies</h2>
             <p class="about-text" style="margin-bottom: 3rem;">
                 Explore my technical design documents, network topologies, and lab execution logs directly from the active deployment directory.
@@ -442,7 +524,7 @@
 
         <section id="contact" class="container contact-section">
             <h2 class="section-title">Get In Touch</h2>
-            <p class="about-text" style="text-align: center; margin-bottom: 0;"></p>
+            <p class="about-text" style="text-align: center; margin-bottom: 0;">Open for technical discussions, network projects, and professional engineering collaborations.</p>
             
             <div class="contact-buttons">
                 <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
@@ -460,13 +542,11 @@
         async function loadRepositoryPDFs() {
             const container = document.getElementById('dynamic-pdf-container');
             
-            // Configuration mapped directly to your account
             const gitHubUser = 'MacieKJeczmyk';
             const gitHubRepo = 'Blog';
             const targetFolder = 'projects';
 
             try {
-                // Fetch active catalog from GitHub Public API
                 const response = await fetch(`https://api.github.com/repos/${gitHubUser}/${gitHubRepo}/contents/${targetFolder}`);
                 
                 if (!response.ok) {
@@ -474,8 +554,6 @@
                 }
 
                 const directoryContents = await response.json();
-                
-                // Keep only files ending with .pdf extension
                 const pdfFiles = directoryContents.filter(item => item.name.toLowerCase().endsWith('.pdf'));
 
                 if (pdfFiles.length === 0) {
@@ -483,25 +561,21 @@
                     return;
                 }
 
-                container.innerHTML = ''; // Clear loading status
+                container.innerHTML = ''; 
 
                 pdfFiles.forEach(file => {
-                    // Prettify filename logic: "next-gen-firewall.pdf" -> "Next Gen Firewall"
                     let cleanTitle = file.name
-                        .replace(/\.[^/.]+$/, "") // strip extension
-                        .replace(/[-_]/g, " ");   // replace symbols with clean spacing
+                        .replace(/\.[^/.]+$/, "") 
+                        .replace(/[-_]/g, " ");   
                     
-                    // Capitalize each word for enterprise layout
                     cleanTitle = cleanTitle.replace(/\b\w/g, character => character.toUpperCase());
-
-                    // Map relative path for hosting compatibility
                     const secureFilePath = `./${targetFolder}/${file.name}`;
 
                     const cardComponent = document.createElement('div');
                     cardComponent.className = 'project-card';
                     cardComponent.innerHTML = `
                         <div class="pdf-icon-frame">
-                            <i class="text-red fas fa-file-pdf"></i>
+                            <i class="fas fa-file-pdf"></i>
                         </div>
                         <h3>${cleanTitle}</h3>
                         <p>Engineering deployment layout, network schema design, and operational verification records.</p>
@@ -523,7 +597,6 @@
             }
         }
 
-        // Sidebar tracking updates
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -544,7 +617,6 @@
             });
         });
 
-        // Initialize execution on content render
         loadRepositoryPDFs();
     </script>
 
