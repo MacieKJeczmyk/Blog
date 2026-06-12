@@ -14,6 +14,7 @@
             --text-light: #475569; /* Slate muted text */
             --card-bg: #ffffff; /* Section background */
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --sidebar-width: 260px;
         }
 
         body {
@@ -22,19 +23,43 @@
             background-color: var(--bg-color);
             color: var(--text-dark);
             line-height: 1.6;
+            display: flex;
         }
 
-        /* --- Header / Navigation --- */
+        /* --- Left Sidebar Navigation --- */
         header {
+            width: var(--sidebar-width);
+            height: 100vh;
             background-color: var(--card-bg);
-            padding: 1rem 10%;
-            display: flex;
-            justify-content: flex-end; 
-            align-items: center;
-            box-shadow: var(--shadow);
-            position: sticky;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            position: fixed;
             top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem 1.5rem;
+            box-sizing: border-box;
             z-index: 1000;
+        }
+
+        .sidebar-brand {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-brand h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .sidebar-brand p {
+            margin: 0.2rem 0 0 0;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
         }
 
         nav ul {
@@ -42,30 +67,51 @@
             margin: 0;
             padding: 0;
             display: flex;
-            gap: 2rem;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         nav a {
             text-decoration: none;
-            color: var(--text-dark);
+            color: var(--text-light);
             font-weight: 500;
-            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
         }
 
-        nav a:hover {
+        nav a:hover, nav a.active {
             color: var(--primary-color);
+            background-color: rgba(2, 132, 199, 0.08);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        /* --- Main Content Wrapper --- */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            box-sizing: border-box;
         }
 
         /* --- Hero Section --- */
         .hero {
-            padding: 6rem 10% 4rem 10%;
+            padding: 6rem 8% 4rem 8%;
             text-align: center;
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(248, 250, 252, 0) 100%);
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.06) 0%, rgba(248, 250, 252, 0) 100%);
         }
 
         .hero img {
-            width: 130px;
-            height: 130px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
@@ -81,7 +127,7 @@
         }
 
         .hero h2 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--primary-color);
             font-weight: 600;
             margin-bottom: 1.5rem;
@@ -100,6 +146,8 @@
             text-decoration: none;
             font-weight: 600;
             transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
@@ -115,9 +163,20 @@
             background-color: #005987;
         }
 
+        .btn-danger {
+            background-color: #ef4444;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            border-radius: 6px;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
         /* --- General Containers --- */
         .container {
-            padding: 4rem 10%;
+            padding: 5rem 8%;
         }
 
         .section-title {
@@ -142,7 +201,6 @@
             border-radius: 2px;
         }
 
-        /* --- About Section & Profile --- */
         .about-text {
             max-width: 800px;
             margin: 0 auto;
@@ -155,7 +213,7 @@
         /* --- Skills Section --- */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
             max-width: 1000px;
             margin: 0 auto;
@@ -187,10 +245,10 @@
             color: var(--text-light);
         }
 
-        /* --- Projects Section --- */
+        /* --- Dynamic Projects Section --- */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
             max-width: 1000px;
             margin: 0 auto;
@@ -204,6 +262,7 @@
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         .project-card:hover {
@@ -213,54 +272,106 @@
 
         .project-card img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
         }
 
         .project-content {
-            padding: 2rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
         .project-content h3 {
-            font-size: 1.3rem;
-            margin: 0 0 0.75rem 0;
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem 0;
             font-weight: 700;
         }
 
         .project-content p {
             color: var(--text-light);
-            font-size: 0.95rem;
-            margin: 0 0 1.5rem 0;
+            font-size: 0.9rem;
+            margin: 0 0 1.25rem 0;
             flex-grow: 1;
         }
         
         .project-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            gap: 0.4rem;
+            margin-bottom: 1.25rem;
         }
         
         .tag {
             background-color: #f1f5f9;
             color: #475569;
-            padding: 0.25rem 0.75rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
         }
 
-        .project-links a {
+        .project-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .project-actions a {
             text-decoration: none;
             color: var(--primary-color);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        /* --- Contact Section Alignment Fix --- */
+        /* --- Project Manager Form Panel --- */
+        .admin-panel {
+            max-width: 1000px;
+            margin: 0 auto 3rem auto;
+            background-color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .admin-panel h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text-light);
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 0.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        /* --- Contact Section --- */
         .contact-section {
             text-align: center;
             display: flex;
@@ -279,159 +390,283 @@
             margin-top: 2rem;
         }
 
-        /* --- Footer --- */
-        footer {
-            background-color: #0f172a;
-            color: #94a3b8;
-            text-align: center;
-            padding: 2.5rem 10%;
-        }
-
-        footer p {
-            margin: 0;
-        }
-
         /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            header { padding: 1rem 5%; justify-content: center; }
-            nav ul { gap: 1.5rem; font-size: 0.95rem; }
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            header {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem 5%;
+                flex-direction: row;
+            }
+            .sidebar-brand { margin-bottom: 0; text-align: left; }
+            nav ul { flex-direction: row; gap: 1rem; }
+            nav a { padding: 0.5rem; }
+            nav a span { display: none; } /* Hide text icon captions on small mobile menu */
+            .sidebar-footer { display: none; }
+            .main-wrapper { margin-left: 0; width: 100%; }
             .container { padding: 3rem 5%; }
             .hero { padding: 4rem 5%; }
             .hero h1 { font-size: 2.2rem; }
-            .section-title { font-size: 1.6rem; margin-bottom: 2rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
+        <div class="sidebar-brand">
+            <h3>M. Jęczmyk</h3>
+            <p>Network Engineer</p>
+        </div>
+        
         <nav>
             <ul>
-                <li><a href="#about">Profile</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about" class="active"><i class="fas fa-user"></i> <span>Profile</span></a></li>
+                <li><a href="#skills"><i class="fas fa-cog"></i> <span>Skills</span></a></li>
+                <li><a href="#projects"><i class="fas fa-code-branch"></i> <span>Projects</span></a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
             </ul>
         </nav>
+
+        <div class="sidebar-footer">
+            <p>&copy; 2026 Portfolio</p>
+        </div>
     </header>
 
-    <section class="hero">
-        <img src="image.jpg" alt="Maciej Jęczmyk">
-        <h1>Maciej Jęczmyk</h1>
-        <h2>Network Engineer</h2>
-        <p class="about-text" style="max-width: 650px; font-size: 1.15rem; margin-bottom: 1.5rem;">
-            Specializing in enterprise routing ecosystems, network infrastructure validation, and security hardware testing.
-        </p>
-        <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
-            <i class="fab fa-linkedin"></i> LinkedIn
-        </a>
-    </section>
+    <div class="main-wrapper">
 
-    <section id="about" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
-        <h2 class="section-title">Professional Summary</h2>
-        <p class="about-text">
-            Hands-on Network Engineer focused on building, testing, and troubleshooting enterprise Layer 1-4 routing and switching topologies (OSPF, EIGRP, RIP). Experienced in rigorous network infrastructure validation using Ixia/Spirent traffic generators, deep packet capture analysis via Wireshark, and Root Cause Analysis (RCA). Competencies include provisioning Cisco security architectures (ASA, FTD Firepower managed via FMC/FDM), managing virtualized infrastructure on VMware ESXi, and orchestrating server compute platforms via Cisco UCS (CIMC).
-        </p>
-    </section>
-
-    <section id="skills" class="container">
-        <h2 class="section-title">Core Expertise</h2>
-        <div class="skills-grid">
-            
-            <div class="skill-item">
-                <i class="fas fa-route"></i>
-                <h3>Routing & Switching</h3>
-                <p>OSPF, EIGRP, RIP, VLANs, IP Addressing, L1-L4 Infrastructure</p>
-            </div>
-            
-            <div class="skill-item">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Network Security</h3>
-                <p>Cisco ASA, FTD Firepower, FMC, FDM, ACLs, NAT, VPNs</p>
-            </div>
-            
-            <div class="skill-item">
-                <i class="fas fa-flask"></i>
-                <h3>Lab & Infrastructure</h3>
-                <p>Lab Management, Cabling, Inventory, RCA Issue Replication</p>
-            </div>
-            
-            <div class="skill-item">
-                <i class="fas fa-vial"></i>
-                <h3>Testing & Analysis</h3>
-                <p>Ixia, Spirent Traffic Evaluation, Wireshark Packet Analysis</p>
-            </div>
-            
-            <div class="skill-item">
-                <i class="fas fa-server"></i>
-                <h3>Compute & Virtualization</h3>
-                <p>Cisco UCS, CIMC Administration, VMware ESXi Hypervisors</p>
-            </div>
-            
-            <div class="skill-item">
-                <i class="fas fa-file-alt"></i>
-                <h3>Documentation</h3>
-                <p>Topology Designing, Test Execution Logs, Configuration Continuity</p>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
-        <h2 class="section-title">Technical Projects</h2>
-        <div class="projects-grid">
-            
-            <div class="project-card">
-                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="Network Automation">
-                <div class="project-content">
-                    <h3>Automated Lab Provisioning & Backup</h3>
-                    <p>Developed Python and Ansible playbooks to automate device state captures and configuration backups across multi-vendor lab environments, minimizing human error during replication testing.</p>
-                    <div class="project-tags">
-                        <span class="tag">Ansible</span>
-                        <span class="tag">Python</span>
-                        <span class="tag">Cisco IOS</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/MacieKJeczmyk" target="_blank"><i class="fab fa-github"></i> View Code</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Network Security">
-                <div class="project-content">
-                    <h3>Next-Gen Firewall Cluster Deployment</h3>
-                    <p>Designed and validated a high-availability Cisco FTD/Firepower cluster lab managed via FMC. Successfully tested granular Access Control Lists (ACLs), NAT policies, and secure AnyConnect VPN tunnels.</p>
-                    <div class="project-tags">
-                        <span class="tag">Cisco FTD</span>
-                        <span class="tag">FMC</span>
-                        <span class="tag">VPN</span>
-                        <span class="tag">Security</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/MacieKJeczmyk" target="_blank"><i class="fas fa-file-alt"></i> Documentation</a>
-                    </div>
-                </div>
-            </div>
-            </div>
-    </section>
-
-    <section id="contact" class="container contact-section">
-        <h2 class="section-title">Get In Touch</h2>
-        <p class="about-text" style="text-align: center; margin-bottom: 0;">Open for technical discussions, network projects, and professional engineering collaborations.</p>
-        
-        <div class="contact-buttons">
+        <section class="hero">
+            <img src="image.jpg" alt="Maciej Jęczmyk">
+            <h1>Maciej Jęczmyk</h1>
+            <h2>Network Engineer</h2>
+            <p class="about-text" style="max-width: 650px; font-size: 1.15rem; margin-bottom: 1.5rem;">
+                Specializing in enterprise routing ecosystems, network infrastructure validation, and security hardware testing.
+            </p>
             <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
-                <i class="fab fa-linkedin"></i> LinkedIn Profile
+                <i class="fab fa-linkedin"></i> LinkedIn
             </a>
-            <a href="mailto:your.email@domain.com" class="btn">
-                <i class="far fa-envelope"></i> Send an Email
-            </a>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <p>&copy; 2026 Maciej Jęczmyk. All rights reserved.</p>
-    </footer>
+        <section id="about" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
+            <h2 class="section-title">Professional Summary</h2>
+            <p class="about-text">
+                Hands-on Network Engineer focused on building, testing, and troubleshooting enterprise Layer 1-4 routing and switching topologies (OSPF, EIGRP, BGP). Experienced in rigorous network infrastructure validation using Ixia/Spirent traffic generators, deep packet capture analysis via Wireshark, and Root Cause Analysis (RCA). Competencies include provisioning Cisco security architectures (ASA, FTD Firepower managed via FMC/FDM), managing virtualized infrastructure on VMware ESXi, and orchestrating server compute platforms via Cisco UCS (CIMC).
+            </p>
+        </section>
+
+        <section id="skills" class="container">
+            <h2 class="section-title">Core Expertise</h2>
+            <div class="skills-grid">
+                
+                <div class="skill-item">
+                    <i class="fas fa-route"></i>
+                    <h3>Routing & Switching</h3>
+                    <p>OSPF, EIGRP, BGP, VLANs, IP Addressing, L1-L4 Infrastructure</p>
+                </div>
+                
+                <div class="skill-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Network Security</h3>
+                    <p>Cisco ASA, FTD Firepower, FMC, FDM, ACLs, NAT, VPNs</p>
+                </div>
+                
+                <div class="skill-item">
+                    <i class="fas fa-flask"></i>
+                    <h3>Lab & Infrastructure</h3>
+                    <p>Lab Management, Cabling, Inventory, RCA Issue Replication</p>
+                </div>
+                
+                <div class="skill-item">
+                    <i class="fas fa-vial"></i>
+                    <h3>Testing & Analysis</h3>
+                    <p>Ixia, Spirent Traffic Evaluation, Wireshark Packet Analysis</p>
+                </div>
+                
+                <div class="skill-item">
+                    <i class="fas fa-server"></i>
+                    <h3>Compute & Virtualization</h3>
+                    <p>Cisco UCS, CIMC Administration, VMware ESXi Hypervisors</p>
+                </div>
+                
+                <div class="skill-item">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Documentation</h3>
+                    <p>Topology Designing, Test Execution Logs, Configuration Continuity</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="projects" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
+            <h2 class="section-title">Technical Projects</h2>
+            
+            <div class="admin-panel">
+                <h3><i class="fas fa-plus-circle" style="color: var(--primary-color);"></i> Project Control Manager (Local Storage)</h3>
+                <form id="project-form" onsubmit="addProject(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="proj-title">Project Title</label>
+                            <input type="text" id="proj-title" required placeholder="e.g., BGP Multi-Homing Setup">
+                        </div>
+                        <div class="form-group">
+                            <label for="proj-image">Image URL</label>
+                            <input type="text" id="proj-image" placeholder="Unsplash/Direct link (Optional)">
+                        </div>
+                        <div class="form-group">
+                            <label for="proj-tags">Tags / Tech (Comma separated)</label>
+                            <input type="text" id="proj-tags" required placeholder="BGP, Cisco IOS, GNS3">
+                        </div>
+                        <div class="form-group">
+                            <label for="proj-link">Project Link / Repo</label>
+                            <input type="text" id="proj-link" required placeholder="GitHub URL or '#' ">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="proj-desc">Description</label>
+                        <textarea id="proj-desc" rows="2" required placeholder="Briefly explain what you engineered and validated..."></textarea>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Project Card</button>
+                </form>
+            </div>
+
+            <div class="projects-grid" id="projects-container">
+                </div>
+        </section>
+
+        <section id="contact" class="container contact-section">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="about-text" style="text-align: center; margin-bottom: 0;">Open for technical discussions, network projects, and professional engineering collaborations.</p>
+            
+            <div class="contact-buttons">
+                <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-linkedin"></i> LinkedIn Profile
+                </a>
+                <a href="mailto:your.email@domain.com" class="btn">
+                    <i class="far fa-envelope"></i> Send an Email
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Initial core placeholder mock-up data seeds
+        const initialProjects = [
+            {
+                id: 1,
+                title: "Automated Lab Provisioning & Backup",
+                desc: "Developed Python and Ansible playbooks to automate device state captures and configuration backups across multi-vendor lab environments, minimizing human error during replication testing.",
+                tags: ["Ansible", "Python", "Cisco IOS"],
+                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80",
+                link: "https://github.com/MacieKJeczmyk"
+            },
+            {
+                id: 2,
+                title: "Next-Gen Firewall Cluster Deployment",
+                desc: "Designed and validated a high-availability Cisco FTD/Firepower cluster lab managed via FMC. Successfully tested granular Access Control Lists (ACLs), NAT policies, and secure AnyConnect VPN tunnels.",
+                tags: ["Cisco FTD", "FMC", "VPN", "Security"],
+                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80",
+                link: "https://github.com/MacieKJeczmyk"
+            }
+        ];
+
+        // Load project dynamic database engine states
+        let projects = JSON.parse(localStorage.getItem('network_projects'));
+        if (!projects || projects.length === 0) {
+            projects = initialProjects;
+            localStorage.setItem('network_projects', JSON.stringify(projects));
+        }
+
+        // Render projects engine
+        function renderProjects() {
+            const container = document.getElementById('projects-container');
+            container.innerHTML = '';
+
+            projects.forEach(project => {
+                const tagSpans = project.tags.map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
+                const fallbackImg = project.image ? project.image : 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80';
+                
+                const cardHTML = `
+                    <div class="project-card">
+                        <img src="${fallbackImg}" alt="${project.title}">
+                        <div class="project-content">
+                            <h3>${project.title}</h3>
+                            <p>${project.desc}</p>
+                            <div class="project-tags">
+                                ${tagSpans}
+                            </div>
+                            <div class="project-actions">
+                                <a href="${project.link}" target="_blank"><i class="fab fa-github"></i> View Details</a>
+                                <button onclick="deleteProject(${project.id})" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Add dynamic item action
+        function addProject(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('proj-title').value;
+            const image = document.getElementById('proj-image').value;
+            const tagsInput = document.getElementById('proj-tags').value;
+            const link = document.getElementById('proj-link').value;
+            const desc = document.getElementById('proj-desc').value;
+
+            const tagsArray = tagsInput.split(',').filter(tag => tag.trim() !== '');
+
+            const newProject = {
+                id: Date.now(), // Unique ID token generator
+                title: title,
+                desc: desc,
+                tags: tagsArray,
+                image: image,
+                link: link
+            };
+
+            projects.push(newProject);
+            localStorage.setItem('network_projects', JSON.stringify(projects));
+            
+            renderProjects();
+            document.getElementById('project-form').reset();
+        }
+
+        // Delete dynamic item action
+        function deleteProject(id) {
+            projects = projects.filter(proj => proj.id !== id);
+            localStorage.setItem('network_projects', JSON.stringify(projects));
+            renderProjects();
+        }
+
+        // Sync left side panel active tab state changes on scrolling highlight hooks
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize execution on runtime DOM generation load hook
+        renderProjects();
+    </script>
 
 </body>
 </html>
