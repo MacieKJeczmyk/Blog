@@ -28,7 +28,7 @@
             background-color: var(--card-bg);
             padding: 1rem 10%;
             display: flex;
-            justify-content: flex-end; /* Clean right-aligned menu */
+            justify-content: flex-end; 
             align-items: center;
             box-shadow: var(--shadow);
             position: sticky;
@@ -147,7 +147,8 @@
         .about-text {
             max-width: 850px;
             margin: 0 auto;
-            text-align: center;
+            text-align: justify;
+            text-justify: inter-word;
             color: var(--text-light);
             font-size: 1.1rem;
         }
@@ -155,7 +156,7 @@
         /* --- Skills Section --- */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             max-width: 1000px;
             margin: 0 auto;
@@ -181,10 +182,16 @@
             margin-bottom: 1rem;
         }
         
+        .skill-item h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
         .skill-item p {
             margin: 0;
-            font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
         }
 
         /* --- Footer --- */
@@ -217,20 +224,20 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Expertise</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#skills">Technical Expertise</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <img src="https://github.com/MacieKJeczmyk/MacieKJeczmyk.github.io/blob/main/image.jpg" alt="Maciej Jęczmyk">
+        <img src="https://github.com/MacieKJeczmyk.png" alt="Maciej Jęczmyk">
         <h1>Maciej Jęczmyk</h1>
         <h2>Network Engineer</h2>
-        <p class="about-text" style="margin-bottom: 2rem;">
-            Designing, implementing, and optimizing secure, highly available network infrastructures (LAN/WAN/Cloud). 
-            Focused on system reliability and network automation.
+        <p class="about-text" style="text-align: center; margin-bottom: 2rem;">
+            Specializing in Layer 1-4 network architectures, enterprise-grade security solutions, and rigorous infrastructure validation. 
+            Experienced in managing complex lab environments and conducting advanced hardware and packet-level troubleshooting.
         </p>
         <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
             <i class="fab fa-linkedin"></i> LinkedIn Profile
@@ -240,28 +247,63 @@
     <section id="about" class="container" style="background-color: var(--card-bg); border-radius: 20px;">
         <h2 class="section-title">Professional Profile</h2>
         <p class="about-text">
-            I am a results-driven Network Engineer passionate about building stable enterprise-grade network and system architectures. 
-            My expertise includes advanced routing and switching, deploying Next-Generation Firewalls (NGFW), 
-            and seamlessly integrating on-premises environments with cloud infrastructure. 
-            Leveraging a NetDevOps mindset, I focus on automation to streamline daily administration and minimize downtime.
+            I am a detail-oriented Network Engineer with hands-on experience in building, maintaining, and validating complex enterprise and lab network environments. 
+            My expertise spans the implementation of robust Layer 1-4 architectures, utilizing core routing protocols (OSPF, EIGRP, RIP), VLAN segmentation, and precise IP addressing. 
+            I possess a strong background in network security and virtualization, deploying and configuring Cisco NGFW solutions (ASA, Firepower/FPR via FMC/FDM) alongside managing virtualized infrastructures on VMware ESXi and hardware provisioning within Cisco UCS environments.
+        </p>
+        <br>
+        <p class="about-text">
+            Driven by technical accuracy, I specialize in advanced troubleshooting and performance validation, executing comprehensive test plans using industry-standard traffic generators like Ixia and Spirent, and performing deep packet-level analysis via Wireshark for Root Cause Analysis (RCA). 
+            Dedicated to operational continuity, I excel at producing structured technical documentation, ensuring complex network topologies and test outcomes are clearly articulated for seamless knowledge sharing.
         </p>
     </section>
 
     <section id="skills" class="container">
-        <h2 class="section-title">Areas of Expertise</h2>
+        <h2 class="section-title">Technical Expertise</h2>
         <div class="skills-grid">
-            <div class="skill-item"><i class="fas fa-route"></i><p>Routing & Switching</p></div>
-            <div class="skill-item"><i class="fas fa-shield-alt"></i><p>Network Security</p></div>
-            <div class="skill-item"><i class="fab fa-python"></i><p>Network Automation</p></div>
-            <div class="skill-item"><i class="fas fa-network-wired"></i><p>LAN / WAN / VPN</p></div>
-            <div class="skill-item"><i class="fas fa-cloud"></i><p>Cloud Networking</p></div>
-            <div class="skill-item"><i class="fas fa-chart-line"></i><p>Monitoring & Analytics</p></div>
+            
+            <div class="skill-item">
+                <i class="fas fa-route"></i>
+                <h3>Routing & Switching</h3>
+                <p>L1-L4 Architecture, OSPF, EIGRP, RIP, VLANs, TCP/IP</p>
+            </div>
+            
+            <div class="skill-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Network Security</h3>
+                <p>Cisco ASA, FTD Firepower, FMC, FDM, ACLs, NAT, VPNs</p>
+            </div>
+            
+            <div class="skill-item">
+                <i class="fas fa-flask"></i>
+                <h3>Lab & Infrastructure</h3>
+                <p>Environment Setup, Cabling, Inventory, RCA Replication</p>
+            </div>
+            
+            <div class="skill-item">
+                <i class="fas fa-vial"></i>
+                <h3>Testing & Analysis</h3>
+                <p>Ixia, Spirent, Wireshark Packet Analysis, Traffic Validation</p>
+            </div>
+            
+            <div class="skill-item">
+                <i class="fas fa-server"></i>
+                <h3>Server & Compute</h3>
+                <p>Cisco UCS Environments, CIMC Hardware Management</p>
+            </div>
+            
+            <div class="skill-item">
+                <i class="fas fa-cloud"></i>
+                <h3>Virtualization</h3>
+                <p>VMware ESXi, Virtual Machine Deployment & Management</p>
+            </div>
+
         </div>
     </section>
 
     <section id="contact" class="container" style="text-align: center;">
         <h2 class="section-title">Get In Touch</h2>
-        <p class="about-text" style="margin-bottom: 3rem;">Looking for a Network Engineer for a project or long-term collaboration? Let's connect on LinkedIn or reach out via email.</p>
+        <p class="about-text" style="text-align: center; margin-bottom: 3rem;">Looking for a professional Network Engineer with deep testing and validation experience? Let's connect.</p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
             <a href="https://www.linkedin.com/in/maciej-j%C4%99czmyk/" target="_blank" class="btn btn-secondary">
                 <i class="fab fa-linkedin"></i> LinkedIn Profile
